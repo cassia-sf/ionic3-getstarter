@@ -2,5 +2,11 @@
   "name": "",
   "app_id": "",
   "integrations": {},
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/mooviesapi",
+      "proxyUrl": "https://api.themoviedb.org/3"
+    }
+  ]
 }
