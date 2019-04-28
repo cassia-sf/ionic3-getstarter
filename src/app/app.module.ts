@@ -19,6 +19,7 @@ import { ConfiguracoesPageModule } from '../pages/configuracoes/configuracoes.mo
 import { SobrePageModule } from '../pages/sobre/sobre.module';
 import { PerfilPageModule } from '../pages/perfil/perfil.module';
 import { FilmeDetalhesPageModule } from '../pages/filme-detalhes/filme-detalhes.module';
+import { PicturesPageModule } from '../pages/pictures/pictures.module';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { FilmeDetalhesPageModule } from '../pages/filme-detalhes/filme-detalhes.
     PerfilPageModule,
     SobrePageModule,
     FilmeDetalhesPageModule,
+    PicturesPageModule,
     HttpModule,
     HttpClientModule
   ],
