@@ -33,6 +33,8 @@ export class FeedPage {
   public loader: any;
   public refresher: any;
   public isRefreshing: boolean = false;
+  public page = 1;
+  public infinityScroll;
 
   constructor(
     public navCtrl: NavController, 
@@ -69,13 +71,21 @@ export class FeedPage {
     console.log('ionViewDidLoad FeedPage'); //roda uma vez
   }
 
-  carregarFilmes(){
+  carregarFilmes(novaPagina: boolean = false){
     this.abreCarregando();
-    this.movieProvider.getLatestMoovies().subscribe(
+    this.movieProvider.getLatestMoovies(this.page).subscribe(
       data=>{
           const response = (data as any) // casting de data para acessar _body;
           console.log (response); 
-          this.lista_filmes = response.results;
+          
+          if (novaPagina){// nova página só adiciona filmes e fecha o infinityScroll
+            this.lista_filmes = this.lista_filmes.concat(response.results);
+            this.infinityScroll.complete();
+            console.log("nova página:" + novaPagina);
+          }else{
+            this.lista_filmes = response.results;
+          }
+
           this.fechaCarregando();
 
           if (this.isRefreshing){
@@ -102,6 +112,16 @@ export class FeedPage {
   abrirDetalhes(filme){
     console.log(filme);
     this.navCtrl.push(FilmeDetalhesPage, {id: filme.id});
+  }
+
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+    this.page++;
+    this.infinityScroll = infiniteScroll;
+    this.carregarFilmes(true); //carrega filmes em nova página, bateu no infinity
+
+    infiniteScroll.complete();
+
   }
 
 }
