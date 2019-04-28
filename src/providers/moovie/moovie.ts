@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 
 /*
   Generated class for the MoovieProvider provider.
@@ -10,8 +11,24 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class MoovieProvider {
 
-  constructor(public http: HttpClient) {
+  private baseApiPath = "mooviesapi";
+
+  constructor(
+    public http: HttpClient,
+    private platform: Platform
+    ) {
     console.log('Hello MoovieProvider Provider');
+    if (platform.is('cordova')){
+      this.baseApiPath = "https://api.themoviedb.org/3";
+    }
+  }
+
+  getLatestMoovies(){
+    return this.http.get(this.baseApiPath + "/movie/popular?api_key=" + this.getApiKey());
+  }
+
+  getApiKey(): string{
+    return "d4b87f37500eb69e9d3f27a9f8dfea9c";
   }
 
 }
