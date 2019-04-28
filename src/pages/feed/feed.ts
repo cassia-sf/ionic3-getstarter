@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MoovieProvider } from '../../providers/moovie/moovie';
 
 /**
@@ -29,24 +29,45 @@ export class FeedPage {
   }
 
   public lista_filmes = new Array<any>();
+  public loader: any;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private movieProvider: MoovieProvider) {
+    private movieProvider: MoovieProvider,
+    public loadingCtrl: LoadingController
+    ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedPage');
+  abreCarregando() {
+    this.loader = this.loadingCtrl.create({
+      content: "Carregando filmes..."      
+    });
+    this.loader.present();
+  }
+
+  fechaCarregando(){
+    this.loader.dismiss();
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter FeedPage'); //roda cada vez que entra
+    this.abreCarregando();
     this.movieProvider.getLatestMoovies().subscribe(
       data=>{
           const response = (data as any) // casting de data para acessar _body;
           console.log (response); 
           this.lista_filmes = response.results;
+          this.fechaCarregando();
       }, error => {
           console.log (error);
+          this.fechaCarregando();
       }      
     )
+  }
+
+  ionViewDidLoad(){
+    console.log('ionViewDidLoad FeedPage'); //roda uma vez
   }
 
 }
