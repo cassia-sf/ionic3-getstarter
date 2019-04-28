@@ -30,6 +30,8 @@ export class FeedPage {
 
   public lista_filmes = new Array<any>();
   public loader: any;
+  public refresher: any;
+  public isRefreshing: boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -50,8 +52,23 @@ export class FeedPage {
     this.loader.dismiss();
   }
 
+  doRefresh(refresher) {
+    this.refresher = refresher;
+    this.isRefreshing = true;
+    this.carregarFilmes();
+
+  }
+
   ionViewDidEnter() {
     console.log('ionViewDidEnter FeedPage'); //roda cada vez que entra
+    this.carregarFilmes();
+  }
+
+  ionViewDidLoad(){
+    console.log('ionViewDidLoad FeedPage'); //roda uma vez
+  }
+
+  carregarFilmes(){
     this.abreCarregando();
     this.movieProvider.getLatestMoovies().subscribe(
       data=>{
@@ -59,15 +76,20 @@ export class FeedPage {
           console.log (response); 
           this.lista_filmes = response.results;
           this.fechaCarregando();
+
+          if (this.isRefreshing){
+            this.refresher.complete();
+            this.isRefreshing =false;
+          }
       }, error => {
           console.log (error);
           this.fechaCarregando();
+
+          if (this.isRefreshing){
+            this.refresher.complete();
+            this.isRefreshing =false;
+          }
       }      
-    )
+    )    
   }
-
-  ionViewDidLoad(){
-    console.log('ionViewDidLoad FeedPage'); //roda uma vez
-  }
-
 }
