@@ -15,6 +15,9 @@ import { FeedPageModule } from '../pages/feed/feed.module';
 import { IntroPageModule } from '../pages/intro/intro.module';
 import { MoovieProvider } from '../providers/moovie/moovie';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfiguracoesPageModule } from '../pages/configuracoes/configuracoes.module';
+import { SobrePageModule } from '../pages/sobre/sobre.module';
+import { PerfilPageModule } from '../pages/perfil/perfil.module';
 
 
 @NgModule({
@@ -30,6 +33,9 @@ import { HttpClientModule } from '@angular/common/http';
     IonicModule.forRoot(MyApp),
     FeedPageModule,
     IntroPageModule,
+    ConfiguracoesPageModule,
+    PerfilPageModule,
+    SobrePageModule,
     HttpModule,
     HttpClientModule
   ],
