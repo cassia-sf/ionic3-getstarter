@@ -6,5 +6,11 @@ https://nodejs.org/en/
 Android Studio 
 https://developer.android.com/studio/?hl=pt-br
 
+Cordova 
+
+npm i -g cordova
+npm i cordova
+
 Ionic v3
+
 npm install -g ionic@latest-3 
